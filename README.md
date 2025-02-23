@@ -12,6 +12,7 @@ A web app that gathers daily news from an API, allowing users to vote on the mos
 - 📊 Real-time rankings for top weekly, monthly, and yearly news
 - 🔒 User authentication (Google & email login)
 - 📱 Mobile-friendly UI
+- MONETIZATION :o 
 
 ## 🛠️ Tech Stack (Planned)
 - **Frontend:** React, TBD
