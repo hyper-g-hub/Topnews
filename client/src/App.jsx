@@ -1,5 +1,7 @@
-import { Routes, Route, Link } from "react-router-dom"; // Import necessary
-import Signup from "./Signup";
+// Ts is the start page
+
+import { Routes, Route, Link } from "react-router-dom"; // Import necessary components for routing
+import Signup from "./Signup"; 
 import Login from "./Login";
 import Dashboard from "./Dashboard";
 

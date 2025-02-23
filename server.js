@@ -1,16 +1,21 @@
 // server.js
-const express = require("express");
-const cors = require("cors");
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
+// Ts sets up an express.js server with auth using JWT + MongoDB
 
-dotenv.config();
+const express = require("express"); // Import express framework 
+const cors = require("cors"); // Import CORS for cross-origin requests
+const mongoose = require("mongoose"); // mongoDB
+const dotenv = require("dotenv"); // dotenv for enviroment vars
+const bcrypt = require("bcryptjs"); // bcrypt for password hashing
+const jwt = require("jsonwebtoken"); // jwt for authentication
+
+dotenv.config(); // Load enviroment vars from .env file
+
 const app = express();
-app.use(cors());
-app.use(express.json());
+app.use(cors()); // enable CORS
+app.use(express.json()); // enable JSON rq body parsing
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI) // MONGO_URI is stored in the .env file
   .then(() => console.log("MongoDB Connected"))
   .catch(err => console.error(err));
 
@@ -22,23 +27,27 @@ const User = mongoose.model("User", new mongoose.Schema({
 }));
 
 // Register Route
-const bcrypt = require("bcryptjs");
 app.post("/api/register", async (req, res) => {
   const { username, email, password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword = await bcrypt.hash(password, 10); // has password before saving to db (yes the passwords are safe right here guys!!)
   const user = new User({ username, email, password: hashedPassword });
-  await user.save();
+
+  await user.save(); // Save user to MongoDB
+
   res.json({ message: "User registered successfully" });
 });
 
 // Login Route
-const jwt = require("jsonwebtoken");
 app.post("/api/login", async (req, res) => {
   const { email, password } = req.body;
+
+  // check if user exists
   const user = await User.findOne({ email });
   if (!user || !(await bcrypt.compare(password, user.password))) {
     return res.status(401).json({ message: "Invalid credentials" });
   }
+
+  // Generate a JWT token with User ID
   const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
   res.json({ token });
 });

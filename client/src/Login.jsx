@@ -1,15 +1,19 @@
-import { useState } from "react";
-import { login } from "./api/auth";
-import { useNavigate } from "react-router-dom";
+// Ts component handles user login and does the login yk
+
+import { useState } from "react"; // react hooks
+import { login } from "./api/auth"; // login function from API
+import { useNavigate } from "react-router-dom"; // nav hook
 
 export default function Login() {
+  // State to store email + password input
   const [credentials, setCredentials] = useState({ email: "", password: "" });
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // the nav hook
 
+  // handles form submission
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    await login(credentials);
-    navigate("/dashboard");
+    e.preventDefault(); // prevent page reload when submit form
+    await login(credentials); // call login to api
+    navigate("/dashboard"); // redirect to dashboard
   };
 
   return (
