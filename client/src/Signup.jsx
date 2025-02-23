@@ -3,13 +3,17 @@ import { register } from "./api/auth";
 import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
+  // State to store user input (username, email, password)
   const [user, setUser] = useState({ username: "", email: "", password: "" });
+
+  // Hook to nav to different pages
   const navigate = useNavigate();
 
+  // Handles form submission
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    await register(user);
-    navigate("/login");
+    e.preventDefault(); // Prevents page reload
+    await register(user); // Sends user data to backend
+    navigate("/login"); // Redirects to login page after registeration
   };
 
   return (

@@ -1,6 +1,5 @@
 // Ts component is the protected dashboard page that requries authentication to enter
-
-import { useEffect, useState } from "react"; // Import react hooks
+///
 import { getProtectedData, logout } from "./api/auth"; // Import API for fetching protected data (MongoDB)
 import { useNavigate } from "react-router-dom"; // Import navigation hook for redirecting 
 
