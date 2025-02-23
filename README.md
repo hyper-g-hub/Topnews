@@ -18,7 +18,7 @@ A web app that gathers daily news from an API, allowing users to vote on the mos
 - **Backend:** Node.js, FastAPI, express.js, TBD
 - **Database:** MongoDB
 - **Authentication:** MongoDB
-- **Hosting:** TBD
+- **Hosting:** TBD, maybe vercel
 
 ## 🔗 Website Link (Coming Soon)
 
