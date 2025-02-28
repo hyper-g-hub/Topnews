@@ -52,20 +52,20 @@ app.post("/api/login", async (req, res) => {
   res.json({ token });
 });
 
-// Protected Route
+//Middleware to  Protected Route ( i have no idea what ts does)
 const authMiddleware = (req, res, next) => {
-  const token = req.header("Authorization");
+  const token = req.header("Authorization"); // Get token from request headers
   if (!token) return res.status(401).json({ message: "Access Denied" });
 
   try {
-    const verified = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = verified;
-    next();
+    const verified = jwt.verify(token, process.env.JWT_SECRET); // Verify if token is correct
+    req.user = verified; // Store user date
+    next(); // Proceed to next middleware
   } catch {
     res.status(400).json({ message: "Invalid Token" });
   }
 };
-
+// Protected route - requires auth
 app.get("/api/protected", authMiddleware, (req, res) => {
   res.json({ message: "You are authenticated!" });
 });
